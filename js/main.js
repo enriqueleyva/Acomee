@@ -228,11 +228,14 @@ function getData(buscarTexto) {
 	document.getElementById("loader").style.display = "block";
 	document.getElementById("search-input").disabled = true;
 	var settings = {
-		url: "https://script.google.com/macros/s/AKfycbziLnqsOy3sACUyBx9B1783dsbQRdddf_dmg0MEFEO8gMw4qD-ooNBtBo-kf7o9c5qy/exec",
+		url: `http://216.225.203.100/search_acomee`,
 		type: "POST",
 		data: JSON.stringify({
-			texto: buscarTexto, // Esto probablemente debería ser dinámico para tu búsqueda
+			busqueda: buscarTexto,
 		}),
+		headers: {
+			"Content-Type": "application/json",
+		},
 		// contentType: "application/json; charset=utf-8", // Asegúrate de enviar JSON correctamente
 		// dataType: "json", // Esperar una respuesta JSON
 	};
@@ -242,8 +245,8 @@ function getData(buscarTexto) {
 			console.log("Respuesta de la API:", response);
 			const data = JSON.parse(response);
 			// Asumiendo que response ya es un objeto JSON y contiene 'respuesta.respuesta'
-			if (data && data.respuesta && data.respuesta.respuesta) {
-				desencriptar(data.respuesta.respuesta);
+			if (data && data.encrypted_results) {
+				desencriptar(data.encrypted_results);
 			} else {
 				console.error("Estructura de respuesta inesperada:", response);
 				productCardsContainer.innerHTML =
