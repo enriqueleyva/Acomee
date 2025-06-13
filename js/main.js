@@ -199,7 +199,7 @@ function desencriptar(data) {
 		// Asegúrate de que 'result' sea el array de productos
 		// Si el JSON desencriptado es un array directamente, usa result.
 		// Si el JSON desencriptado es un objeto con una propiedad que contiene el array, ajústalo.
-		allProducts = JSON.parse(result); // O result.products si tu JSON tiene esa estructura
+		allProducts = result; // O result.products si tu JSON tiene esa estructura
 		console.log(allProducts, typeof allProducts);
 		// Normalizar las categorías al cargar todos los productos
 		allProducts = allProducts.map((p) => ({
@@ -228,14 +228,11 @@ function getData(buscarTexto) {
 	document.getElementById("loader").style.display = "block";
 	document.getElementById("search-input").disabled = true;
 	var settings = {
-		url: `http://216.225.203.100/search_acomee`,
+		url: "https://script.google.com/macros/s/AKfycbzmxRHeucAF7tsrBJApenw-63jDYbxwf4Y9BLDyRCsVSJWZYXSO_7mVwivbAJOlIS2n/exec",
 		type: "POST",
 		data: JSON.stringify({
-			busqueda: buscarTexto,
+			texto: buscarTexto,
 		}),
-		headers: {
-			"Content-Type": "application/json",
-		},
 		// contentType: "application/json; charset=utf-8", // Asegúrate de enviar JSON correctamente
 		// dataType: "json", // Esperar una respuesta JSON
 	};
@@ -245,8 +242,8 @@ function getData(buscarTexto) {
 			console.log("Respuesta de la API:", response);
 			const data = JSON.parse(response);
 			// Asumiendo que response ya es un objeto JSON y contiene 'respuesta.respuesta'
-			if (data && data.encrypted_results) {
-				desencriptar(data.encrypted_results);
+			if (data && data.respuesta.encrypted_results) {
+				desencriptar(data.respuesta.encrypted_results);
 			} else {
 				console.error("Estructura de respuesta inesperada:", response);
 				productCardsContainer.innerHTML =
