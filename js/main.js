@@ -184,7 +184,6 @@ function desencriptar(data) {
 	const key = CryptoJS.enc.Utf8.parse("12345678901234567890123456789012");
 	const iv = CryptoJS.enc.Utf8.parse("1234567890123456");
 
-	console.log(data);
 	const encrypted = data;
 
 	try {
@@ -195,12 +194,10 @@ function desencriptar(data) {
 		});
 		const decryptedString = decrypted.toString(CryptoJS.enc.Utf8);
 		const result = JSON.parse(decryptedString);
-		console.log(result);
 		// Asegúrate de que 'result' sea el array de productos
 		// Si el JSON desencriptado es un array directamente, usa result.
 		// Si el JSON desencriptado es un objeto con una propiedad que contiene el array, ajústalo.
 		allProducts = result; // O result.products si tu JSON tiene esa estructura
-		console.log(allProducts, typeof allProducts);
 		// Normalizar las categorías al cargar todos los productos
 		allProducts = allProducts.map((p) => ({
 			...p,
@@ -239,7 +236,6 @@ function getData(buscarTexto) {
 
 	$.ajax(settings)
 		.done(function (response) {
-			console.log("Respuesta de la API:", response);
 			const data = JSON.parse(response);
 			// Asumiendo que response ya es un objeto JSON y contiene 'respuesta.respuesta'
 			if (data && data.respuesta.encrypted_results) {
@@ -268,7 +264,6 @@ function getData(buscarTexto) {
 // Evento para el campo de búsqueda (al presionar Enter)
 searchInput.addEventListener("keyup", (event) => {
 	if (event.key === "Enter") {
-		console.log(searchInput.value);
 		getData(searchInput.value);
 		// applySearchFilter();
 		// // Opcional: Deseleccionar el badge de categoría activa al buscar
